@@ -7,6 +7,7 @@ define('LOADSHEDDING_STAGE', 2);
 $today=date('d');
 
 $teamZones = [
+    '2' => ['Saeed'],
     '5' => ['Nadeem'],
     '10' => ['Justin'],
     '11' => ['Kamil'],
