@@ -2,17 +2,18 @@
 
 date_default_timezone_set('Africa/Johannesburg');
 
-define('LOADSHEDDING_STAGE', 2);
+define('LOADSHEDDING_STAGE', 3);
 
 $today=date('d');
 
 $teamZones = [
     '2' => ['Saeed'],
     '5' => ['Nadeem'],
+    '7' => ['Bert'],
     '10' => ['Justin', 'Tiaan'],
     '11' => ['Kamil'],
     '12' => ['Tohir'],
-    '15' => ['Mel', 'Elvis', 'Mncedi'],
+    '15' => ['Elvis', 'Mncedi'],
 
 ];
 
@@ -59,13 +60,19 @@ for ($i=2; $i<=count($data)-1; $i++)
             
             // Check whether it affects someone in team
             if (isset($teamZones[$zone])) {
-                $loadShedding[$j][] = [
-                    'date'=>$datesColumn[$j],
-                    'zone'=>$zone,
-                    'starttime'=>$startTime,
-                    'endtime'=>$endTime,
-                    'affects'=>$teamZones[$zone]
-                ];
+                if (!isset($loadShedding[$startTime])) {
+                    $loadShedding[$startTime] = [
+                        'date'=>$datesColumn[$j],
+                        'zone'=>[$zone],
+                        'starttime'=>$startTime,
+                        'endtime'=>$endTime,
+                        'affects'=>$teamZones[$zone]
+                    ];
+                } else {
+                    $loadShedding[$startTime]['zone'][] = $zone;
+                    $loadShedding[$startTime]['affects'] = array_merge($loadShedding[$startTime]['affects'], $teamZones[$zone]);
+                }
+                
             }
         }
     }
@@ -73,16 +80,13 @@ for ($i=2; $i<=count($data)-1; $i++)
 
 echo 'Loadshedding in LogTeam for '.date('l, j F Y').' - Stage '.LOADSHEDDING_STAGE.PHP_EOL.PHP_EOL;
 
-foreach ($loadShedding as $result)
+foreach ($loadShedding as $time)
 {
-    foreach ($result as $time)
-    {
-        echo sprintf('Zone %s', str_pad($time['zone'],2));
-        
-        echo sprintf(' - %s till %s for: ', $time['starttime'], $time['endtime']);
-        
-        echo implode(', ', $time['affects']);
-        
-        echo PHP_EOL;
-    }
+    echo sprintf('Zone %s', str_pad(implode(',', $time['zone']), 5));
+    
+    echo sprintf(' - %s till %s for: ', $time['starttime'], $time['endtime']);
+    
+    echo implode(', ', $time['affects']);
+    
+    echo PHP_EOL;
 }
