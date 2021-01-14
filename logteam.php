@@ -17,6 +17,8 @@ $teamZones = [
 
 ];
 
+error_reporting(E_ALL ^ (E_NOTICE | E_WARNING | E_DEPRECATED));
+
 require_once 'vendor/autoload.php';
 
 $csv = new parseCSV('stage'.LOADSHEDDING_STAGE.'.csv');
