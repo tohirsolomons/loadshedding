@@ -2,14 +2,14 @@
 
 date_default_timezone_set('Africa/Johannesburg');
 
-define('LOADSHEDDING_STAGE', 3);
+define('LOADSHEDDING_STAGE', 2);
 
 $today=date('d');
 
 $teamZones = [
     '2' => ['Saeed'],
     '5' => ['Nadeem'],
-    '7' => ['Bert'],
+    '7' => ['Bert', 'Briehan'],
     '10' => ['Justin', 'Tiaan'],
     '11' => ['Kamil'],
     '12' => ['Tohir'],
@@ -82,7 +82,7 @@ echo 'Loadshedding in LogTeam for '.date('l, j F Y').' - Stage '.LOADSHEDDING_ST
 
 foreach ($loadShedding as $time)
 {
-    echo sprintf('Zone %s', str_pad(implode(',', $time['zone']), 5));
+    echo sprintf('Zone %s', str_pad(implode(',', $time['zone']), 7));
     
     echo sprintf(' - %s till %s for: ', $time['starttime'], $time['endtime']);
     
