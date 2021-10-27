@@ -2,19 +2,26 @@
 
 date_default_timezone_set('Africa/Johannesburg');
 
-define('LOADSHEDDING_STAGE', 2);
+$stage = 2;
+
+if (isset($argv[1]) 
+		&& in_array($argv[1], ['1','2','3','4'])) {
+	$stage = (int)$argv[1];
+}
+
+define('LOADSHEDDING_STAGE', $stage);
 
 $today=date('d');
 
 $teamZones = [
-    '2' => ['Saeed'],
+    '2' => ['Yaseen'],
     '5' => ['Nadeem'],
-    '7' => ['Bert', 'Briehan'],
-    '10' => ['Justin', 'Tiaan'],
+    '7' => ['Saeed', 'Akeeda'], // 'Bert', 
+    '10' => ['Tiaan'], // Briehan - 10th Nov
     '11' => ['Kamil'],
     '12' => ['Tohir'],
-    '13' => ['Yaseen'],
-    '15' => ['Elvis', 'Mncedi'],
+    '14' => ['Briehan'],
+    '15' => ['Elvis', 'Mncedi', 'Lisa'],
 
 ];
 
@@ -81,7 +88,7 @@ for ($i=2; $i<=count($data)-1; $i++)
     }
 }
 
-echo 'Loadshedding in LogTeam for '.date('l, j F Y').' - Stage '.LOADSHEDDING_STAGE.PHP_EOL.PHP_EOL;
+echo 'Loadshedding in Merchant Team for '.date('l, j F Y').' - Stage '.LOADSHEDDING_STAGE.PHP_EOL.PHP_EOL;
 
 foreach ($loadShedding as $time)
 {
