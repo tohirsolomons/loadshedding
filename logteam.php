@@ -3,25 +3,34 @@
 date_default_timezone_set('Africa/Johannesburg');
 
 $stage = 2;
+$addday = 0;
 
 if (isset($argv[1]) 
 		&& in_array($argv[1], ['1','2','3','4'])) {
 	$stage = (int)$argv[1];
 }
 
+if (isset($argv[2])) {
+	$addday = (int)$argv[2];
+}
+
 define('LOADSHEDDING_STAGE', $stage);
 
-$today=date('d');
+$date = strtotime(date('Y-m-d'). ' + '.$addday.' days');
+
+$today=date('d', $date);
 
 $teamZones = [
-    '2' => ['Yaseen'],
-    '5' => ['Nadeem'],
-    '7' => ['Saeed', 'Akeeda'], // 'Bert', 
-    '10' => ['Tiaan'], // Briehan - 10th Nov
+    '2' => ['Yaseen', 'Fay-yaaz'],
+    //'5' => ['Nadeem'],
+    '7' => ['Saeed', 'Akeeda', 'Isabel'], // 'Bert', 
+	'8' => ['Kurvin'],
+    '10' => ['Tiaan', 'Briehan'], // Briehan - 10th Nov
     '11' => ['Kamil'],
     '12' => ['Tohir'],
-    '14' => ['Briehan'],
-    '15' => ['Elvis', 'Mncedi', 'Lisa'],
+    '14' => ['Reinhardt'], //'Phumie', 
+    '15' => ['Mncedi'], //'Elvis', 'Lisa'
+    '16' => ['Tasneeka'],
 
 ];
 
@@ -88,7 +97,7 @@ for ($i=2; $i<=count($data)-1; $i++)
     }
 }
 
-echo 'Loadshedding in Merchant Team for '.date('l, j F Y').' - Stage '.LOADSHEDDING_STAGE.PHP_EOL.PHP_EOL;
+echo 'Loadshedding in Merchant Team for '.date('l, j F Y', $date).' - Stage '.LOADSHEDDING_STAGE.PHP_EOL.PHP_EOL;
 
 foreach ($loadShedding as $time)
 {
